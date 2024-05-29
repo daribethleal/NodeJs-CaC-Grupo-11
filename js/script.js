@@ -1,108 +1,76 @@
 
 //---------- Validación de Formulario -----------//
-const formulario = document.querySelector("#formulario_contacto");
-const inputNombre = document.querySelector("#nombre_formulario")
-const inputApellido = document.querySelector("#apellido_formulario");
-const inputEmail = document.querySelector("#email_formulario");
-const inputTelefono = document.querySelector("#telefono_formulario");
-const selectConsulta = document.querySelector("#consulta_formulario");
-const inputCheck = document.querySelector("#condiciones_formulario"); 
+document.querySelector("#formulario_contacto").addEventListener("submit", (event) => {
+    event.preventDefault();
 
-formulario.addEventListener("submit", (event) => {
-    event.preventDefault()
+    const formulario = document.querySelector("#formulario_contacto");
+    const inputNombre = document.querySelector("#nombre_formulario");
+    const inputApellido = document.querySelector("#apellido_formulario");
+    const inputEmail = document.querySelector("#email_formulario");
+    const inputTelefono = document.querySelector("#telefono_formulario");
+    const selectConsulta = document.querySelector("#consulta_formulario");
+    const inputCheck = document.querySelector("#condiciones_formulario");
 
-    nombre = inputNombre.value.trim();
-    if(nombre.length >=3){
-       //console.log(nombre)
-    }
-    else if(nombre.length >0 && nombre.length <3){
-        const error = document.querySelector(".error_input_nombre");
-        error.textContent = "El nombre debe tener como mínimo 3 caracteres."
-        setTimeout(() => {
-            error.textContent = ""
-        },3000)
-    }
-    else{
-        const error = document.querySelector(".error_input_nombre");
-        error.textContent = "El nombre es obligatorio."
-        setTimeout(() => {
-            error.textContent = ""
-        },3000)
-    }
+    let isValid = true;
 
-    apellido = inputApellido.value.trim();
-    if(apellido.length >=3){
-       //console.log(apellido)
-    }
-    else if(apellido.length >0 && apellido.length <3){
-        const error = document.querySelector(".error_input_apellido");
-        error.textContent = "El apellido debe tener como mínimo 3 caracteres."
-        setTimeout(() => {
-            error.textContent = ""
-        },3000)
-    }
-    else{
-        const error = document.querySelector(".error_input_apellido");
-        error.textContent = "El apellido es obligatorio."
-        setTimeout(() => {
-            error.textContent = ""
-        },3000)
+    // Limpiar mensajes de error previos
+    document.querySelector(".error_input_nombre").textContent = '';
+    document.querySelector(".error_input_apellido").textContent = '';
+    document.querySelector(".error_input_email").textContent = '';
+    document.querySelector(".error_input_telefono").textContent = '';
+    document.querySelector(".error_input_consulta").textContent = '';
+    document.querySelector(".error_input_condiciones").textContent = '';
+
+    // Validación de Nombre
+    const nombre = inputNombre.value.trim();
+    const errorNombre = document.querySelector(".error_input_nombre");
+    if (nombre.length < 3) {
+        errorNombre.textContent = nombre.length > 0 ? "El nombre debe tener como mínimo 3 caracteres." : "El nombre es obligatorio.";
+        isValid = false;
     }
 
-    email = inputEmail.value.trim();
-    if(email.length >=3){
-       //console.log(email)
-    }else{
-        const error = document.querySelector(".error_input_email");
-        error.textContent = "El correo es obligatorio."
-        setTimeout(() => {
-            error.textContent = ""
-        },3000)
+    // Validación de Apellido
+    const apellido = inputApellido.value.trim();
+    const errorApellido = document.querySelector(".error_input_apellido");
+    if (apellido.length < 3) {
+        errorApellido.textContent = apellido.length > 0 ? "El apellido debe tener como mínimo 3 caracteres." : "El apellido es obligatorio.";
+        isValid = false;
     }
 
-    if(inputTelefono.value.length >6 && inputTelefono.value.length <15){
-       //console.log(inputTelefono.value)
-    }
-    else if(inputTelefono.value.length >=15){
-        const error = document.querySelector(".error_input_telefono");
-        error.textContent = "El teléfono no debe tener mas de 14 digitos."
-        setTimeout(() => {
-            error.textContent = ""
-        },3000)
-    }
-    else if(inputTelefono.value.length >0 && inputTelefono.value.length <7){
-        const error = document.querySelector(".error_input_telefono");
-        error.textContent = "El teléfono debe tener 7 digitos como mínimo."
-        setTimeout(() => {
-            error.textContent = ""
-        },3000)
-    }
-    else if(inputTelefono.value.length == 0){
-        const error = document.querySelector(".error_input_telefono");
-        error.textContent = "El telefono es obligatorio."
-        setTimeout(() => {
-            error.textContent = ""
-        },3000)
+    // Validación de Email
+    const email = inputEmail.value.trim();
+    const errorEmail = document.querySelector(".error_input_email");
+    if (!email) {
+        errorEmail.textContent = "El correo es obligatorio.";
+        isValid = false;
     }
 
-    if(selectConsulta.value == "" || selectConsulta.value == 0){
-        const error = document.querySelector(".error_input_consulta");
-        error.textContent = "Seleccione una opcion."
-        setTimeout(() => {
-            error.textContent = ""
-        },3000)
-    }else{
-        //console.log(selectConsulta.value);
+    // Validación de Teléfono
+    const telefono = inputTelefono.value.trim();
+    const errorTelefono = document.querySelector(".error_input_telefono");
+    if (telefono.length < 7 || telefono.length > 14) {
+        errorTelefono.textContent = telefono.length === 0 ? "El teléfono es obligatorio." :
+                                    telefono.length < 7 ? "El teléfono debe tener 7 dígitos como mínimo." :
+                                    "El teléfono no debe tener más de 14 dígitos.";
+        isValid = false;
     }
 
-    if(inputCheck.checked){
-        //console.log(inputCheck.value)
-    }else{
-        const error = document.querySelector(".error_input_condiciones");
-        error.textContent = "Acepta los términos y condiciones."
-        setTimeout(() => {
-            error.textContent = ""
-        },3000)
+    // Validación de Consulta
+    const errorConsulta = document.querySelector(".error_input_consulta");
+    if (selectConsulta.value === "") {
+        errorConsulta.textContent = "Seleccione una opción.";
+        isValid = false;
     }
-    
-})
+
+    // Validación de Términos y Condiciones
+    const errorCondiciones = document.querySelector(".error_input_condiciones");
+    if (!inputCheck.checked) {
+        errorCondiciones.textContent = "Debe aceptar los términos y condiciones.";
+        isValid = false;
+    }
+
+    if (isValid) {
+        alert("Gracias por contactarnos");
+        formulario.reset();
+    }
+});
