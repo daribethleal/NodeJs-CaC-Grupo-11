@@ -1,19 +1,41 @@
-SET FOREIGN_KEY_CHECKS=0;
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Servidor: localhost:3306
+-- Tiempo de generación: 04-07-2024 a las 22:30:31
+-- Versión del servidor: 8.0.30
+-- Versión de PHP: 8.1.10
+
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
+
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
+--
+-- Base de datos: `nodejsclass`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `categorias`
+--
 
 CREATE TABLE `categorias` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `nombre` varchar(255) NOT NULL,
-  `descripcion` text DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+  `descripcion` text
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `categorias`
+--
 
 INSERT INTO `categorias` (`id`, `nombre`, `descripcion`) VALUES
 (1, 'Smartphones', 'Teléfono inteligente'),
@@ -23,10 +45,20 @@ INSERT INTO `categorias` (`id`, `nombre`, `descripcion`) VALUES
 (5, 'Teclado', 'Teclado para Pc'),
 (6, 'Mouse', 'Mouse para Pc');
 
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `marcas`
+--
+
 CREATE TABLE `marcas` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `nombre` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `marcas`
+--
 
 INSERT INTO `marcas` (`id`, `nombre`) VALUES
 (1, 'Apple'),
@@ -38,17 +70,27 @@ INSERT INTO `marcas` (`id`, `nombre`) VALUES
 (7, 'Razer'),
 (8, 'Logitech');
 
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `productos`
+--
+
 CREATE TABLE `productos` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `nombre` varchar(255) NOT NULL,
-  `descripcion` text DEFAULT NULL,
+  `descripcion` text,
   `precio` decimal(10,2) NOT NULL,
-  `stock` int(11) NOT NULL,
+  `stock` int NOT NULL,
   `Imagen` varchar(255) DEFAULT NULL,
   `estado` varchar(50) NOT NULL DEFAULT 'Disponible',
-  `id_categoria` int(11) DEFAULT NULL,
-  `id_marca` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+  `id_categoria` int DEFAULT NULL,
+  `id_marca` int DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `productos`
+--
 
 INSERT INTO `productos` (`id`, `nombre`, `descripcion`, `precio`, `stock`, `Imagen`, `estado`, `id_categoria`, `id_marca`) VALUES
 (1, 'Xiaomi Redmi 9C Negro 2GB/32GB', 'Xiaomi Redmi 9C - 4G smartphone - SIM doble - RAM 2 GB / Memoria interna 32 GB - gris medianoche', 90.00, 50, 'assets/img/productos/Producto10.jpg', 'Disponible', 1, 3),
@@ -73,50 +115,90 @@ INSERT INTO `productos` (`id`, `nombre`, `descripcion`, `precio`, `stock`, `Imag
 (20, 'Logitech G203 Lightsync Gaming Negro RGB Ratón', 'Logitech Gaming Mouse G203 LIGHTSYNC - Ratón - óptico - 6 botones - cableado - USB - negro', 35.00, 25, 'assets/img/productos/Producto29.jpg', 'Disponible', 6, 8),
 (21, 'Logitech MX Anywhere 3 Rosa Ratón Inalámbrico', 'Logitech MX Anywhere 3 - Ratón - laser - 6 botones - inalámbrico - Bluetooth, 2.4 GHz - rosa', 80.00, 25, 'assets/img/productos/Producto30.jpg', 'Disponible', 6, 8);
 
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `users`
+--
+
 CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `name` varchar(255) NOT NULL,
   `email` varchar(50) NOT NULL,
-  `password` text(250) NOT NULL,
-  `status` int(11) NOT NULL DEFAULT 1,
-  `date_created` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+  `password` text CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `status` int DEFAULT '1',
+  `date_created` datetime DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `users`
+--
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `status`, `date_created`) VALUES
 (1, 'Daribeth Leal', 'daribethleal.ar@gmail.com', 'Loyalty.1989', 1, '2024-06-22 20:51:08'),
-(2, 'Daribeth Leal 2', 'daribethleal@gmail.com', '123456789', 1, '2024-06-22 20:51:08'),
 (3, 'Admin', 'Admin@admin.com', '12345', 1, '2024-06-22 20:51:08'),
-(4, 'Jepafe', 'jepafe@admin.com', '12345', 1, '2024-06-22 21:15:55');
+(4, 'Jepafe', 'jepafe@admin.com', '12345', 1, '2024-06-22 21:15:55'),
+(17, 'Juan', 'juan2@admin.com', '$2a$10$OguMS4LHBgSVIdm32jXWkeX46V3nfus15WYEeK/Nhe7NPuykKRs06', 1, '2024-07-02 22:46:21'),
+(18, 'Juan', 'juan3@admin.com', '$2a$10$5w0sDa1ZgD5I7xmFjYH9JOgjrmyDwFdQh4SQ5maODWjZUmba4P4gi', 1, '2024-07-03 11:53:52');
 
+--
+-- Índices para tablas volcadas
+--
 
+--
+-- Indices de la tabla `categorias`
+--
 ALTER TABLE `categorias`
   ADD PRIMARY KEY (`id`);
 
+--
+-- Indices de la tabla `marcas`
+--
 ALTER TABLE `marcas`
   ADD PRIMARY KEY (`id`);
 
+--
+-- Indices de la tabla `productos`
+--
 ALTER TABLE `productos`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_categoria` (`id_categoria`),
   ADD KEY `id_marca` (`id_marca`);
 
+--
+-- Indices de la tabla `users`
+--
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `email` (`email`);
 
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
 
+--
+-- AUTO_INCREMENT de la tabla `categorias`
+--
 ALTER TABLE `categorias`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
+--
+-- AUTO_INCREMENT de la tabla `marcas`
+--
 ALTER TABLE `marcas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
+--
+-- AUTO_INCREMENT de la tabla `productos`
+--
 ALTER TABLE `productos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
+--
+-- AUTO_INCREMENT de la tabla `users`
+--
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-SET FOREIGN_KEY_CHECKS=1;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
